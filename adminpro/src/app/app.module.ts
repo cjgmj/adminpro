@@ -11,6 +11,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 import { app_routes } from './app.routes';
+import { PagesComponent } from './pages/pages.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { app_routes } from './app.routes';
     NopagefoundComponent,
     HeaderComponent,
     SidebarComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,

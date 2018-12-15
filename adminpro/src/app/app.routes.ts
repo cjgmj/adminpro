@@ -8,7 +8,7 @@ import { Graficas1Component } from './pages/graficas1/graficas1.component';
 import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { PagesComponent } from './pages/pages.component';
 
-const routes: Routes = [
+const ROUTES: Routes = [
     { path: '', component: PagesComponent, children: [
         { path: 'dashboard', component: DashboardComponent },
         { path: 'progress', component: ProgressComponent },
@@ -20,4 +20,4 @@ const routes: Routes = [
     { path: '**', component: NopagefoundComponent }
 ];
 
-export const app_routes = RouterModule.forRoot( routes, { useHash:  true } );
+export const APP_ROUTES = RouterModule.forRoot( ROUTES, { useHash:  true } );

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-incrementador',
@@ -9,6 +9,8 @@ export class IncrementadorComponent implements OnInit {
 
   @Input(`titulo`) leyenda = 'Leyenda';
   @Input() progreso = 50;
+
+  @Output(`actualizar`) cambioValor: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
@@ -25,6 +27,8 @@ export class IncrementadorComponent implements OnInit {
     if (this.progreso >= 100) {
       this.progreso = 100;
     }
+
+    this.cambioValor.emit(this.progreso);
   }
 
 }

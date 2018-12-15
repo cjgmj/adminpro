@@ -4,11 +4,11 @@
             <div class="card-body">
                 <h4 class="card-title">Barra de progreso</h4>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progreso + '%'"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progreso1 + '%'"></div>
                 </div>
                 <br>
                 <div class="progress">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" [style.width]="progreso + '%'"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" [style.width]="progreso2 + '%'"></div>
                 </div>
             </div>
         </div>
@@ -19,14 +19,14 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <app-incrementador titulo="Progreso azul" [progreso]="20"></app-incrementador>
+                <app-incrementador titulo="Progreso azul" [progreso]="progreso1" (actualizar)="this.progreso1 = $event"></app-incrementador>
             </div>
         </div>
     </div>
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <app-incrementador titulo="Progreso verde"></app-incrementador>
+                <app-incrementador titulo="Progreso verde" [progreso]="progreso2" (actualizar)="this.progreso2 = $event"></app-incrementador>
             </div>
         </div>
     </div>

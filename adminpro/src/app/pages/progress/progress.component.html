@@ -6,6 +6,10 @@
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progreso + '%'"></div>
                 </div>
+                <br>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" [style.width]="progreso + '%'"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -15,22 +19,14 @@
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary" type="button" (click)="cambiarValor(-5)"><i class="mdi mdi-minus"></i></button>
-                    </span>
-                    <input type="number" class="form-control" name="progreso" [(ngModel)]="progreso">
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary" type="button" (click)="cambiarValor(5)"><i class="mdi mdi-plus"></i></button>
-                    </span>
-                </div>
+                <app-incrementador titulo="Progreso azul" [progreso]="20"></app-incrementador>
             </div>
         </div>
     </div>
     <div class="col-6">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Barra de progreso</h4>
+                <app-incrementador titulo="Progreso verde"></app-incrementador>
             </div>
         </div>
     </div>

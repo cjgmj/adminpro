@@ -31,4 +31,21 @@ export class IncrementadorComponent implements OnInit {
     this.cambioValor.emit(this.progreso);
   }
 
+  onChanges( event: number ) {
+
+    const elemHTML = document.getElementsByName('progreso')[0];
+
+    if (event <= 0) {
+      this.progreso = 0;
+    } else if (event >= 100) {
+      this.progreso = 100;
+    } else {
+      this.progreso = event;
+    }
+
+    elemHTML['value'] = Number( this.progreso );
+
+    this.cambioValor.emit(this.progreso);
+  }
+
 }

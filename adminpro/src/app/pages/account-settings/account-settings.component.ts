@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
@@ -13,8 +13,18 @@ export class AccountSettingsComponent implements OnInit {
   ngOnInit() {
   }
 
-  cambiarColor( tema: string ) {
+  cambiarColor( tema: string, link: any ) {
+    this.aplicarCheck(link);
     this._document.getElementById('theme').setAttribute('href', `assets/css/colors/${tema}.css`);
+  }
+
+  aplicarCheck( link: any ) {
+    const selectores: any = document.getElementsByClassName('selector');
+    for ( const ref of selectores ) {
+      ref.classList.remove('working');
+    }
+
+    link.classList.add('working');
   }
 
 }

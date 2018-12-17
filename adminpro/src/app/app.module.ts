@@ -4,8 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { APP_ROUTES } from './app.routes';
 
 import { PagesModule } from './pages/pages.module';
-
-import { SettingsService } from './services/settings.service';
+import { ServiceModule } from './services/service.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -20,9 +19,10 @@ import { RegisterComponent } from './login/register.component';
   imports: [
     BrowserModule,
     PagesModule,
+    ServiceModule,
     APP_ROUTES
   ],
-  providers: [SettingsService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

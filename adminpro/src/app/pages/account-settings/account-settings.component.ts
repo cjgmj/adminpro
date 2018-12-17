@@ -11,6 +11,7 @@ export class AccountSettingsComponent implements OnInit {
   constructor( private _ajustes: SettingsService ) { }
 
   ngOnInit() {
+    this.colocarCheck();
   }
 
   cambiarColor( tema: string, link: any ) {
@@ -25,6 +26,16 @@ export class AccountSettingsComponent implements OnInit {
     }
 
     link.classList.add('working');
+  }
+
+  colocarCheck() {
+    const selectores: any = document.getElementsByClassName('selector');
+    for ( const ref of selectores ) {
+      if (this._ajustes.ajustes.tema === ref.getAttribute('data-theme')) {
+        ref.classList.add('working');
+        break;
+      }
+    }
   }
 
 }

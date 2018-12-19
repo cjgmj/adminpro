@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -37,14 +37,16 @@ export class RxjsComponent implements OnInit {
           clearInterval(intervalo);
           observer.complete();
         }
-
-        // if ( contador === 2 ) {
-        //   // clearInterval(intervalo);
-        //   observer.error('El observador falló en la ejecución.');
-        // }
-
       }, 1000 );
-    } ).pipe( map( response => response['valor'] ) );
+    } ).pipe(
+      map( response => response['valor'] ),
+      filter( (valor, index) => {
+        if ( valor % 2 !== 0 ) {
+          return true;
+        }
+        return false;
+      })
+     );
   }
 
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 @Component({
@@ -7,10 +7,12 @@ import { map, filter } from 'rxjs/operators';
   templateUrl: './rxjs.component.html',
   styles: []
 })
-export class RxjsComponent implements OnInit {
+export class RxjsComponent implements OnInit, OnDestroy {
+
+  subscription: Subscription;
 
   constructor() {
-    this.getObservable().subscribe(
+    this.subscription = this.getObservable().subscribe(
       numero => console.log('Subs', numero),
       error => console.error('Error en el observer.', error),
       () => console.log( 'El observer terminó.')
@@ -20,10 +22,14 @@ export class RxjsComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   getObservable(): Observable<any> {
     return new Observable( observer => {
       let contador = 0;
-      const intervalo = setInterval( () => {
+      setInterval( () => {
 
         contador++;
 
@@ -32,11 +38,6 @@ export class RxjsComponent implements OnInit {
         };
 
         observer.next( salida );
-
-        if ( contador === 3 ) {
-          clearInterval(intervalo);
-          observer.complete();
-        }
       }, 1000 );
     } ).pipe(
       map( response => response['valor'] ),

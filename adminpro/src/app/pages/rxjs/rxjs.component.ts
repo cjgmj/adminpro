@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-rxjs',
@@ -10,8 +10,7 @@ import { retry } from 'rxjs/operators';
 export class RxjsComponent implements OnInit {
 
   constructor() {
-    this.getObservable().pipe( retry(2) )
-    .subscribe(
+    this.getObservable().subscribe(
       numero => console.log('Subs', numero),
       error => console.error('Error en el observer.', error),
       () => console.log( 'El observer terminó.')
@@ -21,27 +20,31 @@ export class RxjsComponent implements OnInit {
   ngOnInit() {
   }
 
-  getObservable(): Observable<number> {
+  getObservable(): Observable<any> {
     return new Observable( observer => {
       let contador = 0;
       const intervalo = setInterval( () => {
 
         contador++;
 
-        observer.next( contador );
+        const salida = {
+          valor: contador
+        };
+
+        observer.next( salida );
 
         if ( contador === 3 ) {
           clearInterval(intervalo);
           observer.complete();
         }
 
-        if ( contador === 2 ) {
-          // clearInterval(intervalo);
-          observer.error('El observador falló en la ejecución.');
-        }
+        // if ( contador === 2 ) {
+        //   // clearInterval(intervalo);
+        //   observer.error('El observador falló en la ejecución.');
+        // }
 
       }, 1000 );
-    } );
+    } ).pipe( map( response => response['valor'] ) );
   }
 
 }

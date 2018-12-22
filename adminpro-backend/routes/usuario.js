@@ -47,6 +47,8 @@ app.post('/', (request, response) => {
             });
         }
 
+        usuarioGuardado.password = null;
+
         return response.status(201).json({
             ok: true,
             usuario: usuarioGuardado
@@ -97,6 +99,36 @@ app.put('/:id', (req, res) => {
                 ok: true,
                 usuario: usuarioGuardado
             });
+        });
+    });
+});
+
+// ===============================
+// Borrar usuario
+// ===============================
+app.delete('/:id', (req, res) => {
+    var id = req.params.id;
+
+    Usuario.findOneAndDelete(id, (err, usuarioBorrado) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error borrando el usuario',
+                errors: err
+            });
+        }
+
+        if (!usuarioBorrado) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'El usuario no existe',
+                errors: { message: 'El usuario no existe' }
+            });
+        }
+
+        return res.status(200).json({
+            ok: true,
+            usuarioBorrado: usuarioBorrado
         });
     });
 });

@@ -54,4 +54,51 @@ app.post('/', (request, response) => {
     });
 });
 
+// ===============================
+// Actualizar usuario
+// ===============================
+app.put('/:id', (req, res) => {
+    var id = req.params.id;
+
+    Usuario.findById(id, (err, usuario) => {
+        if (err) {
+            return res.status(500).json({
+                ok: false,
+                mensaje: 'Error en la búsqueda del usuario',
+                errors: err
+            });
+        }
+
+        if (!usuario) {
+            return res.status(400).json({
+                ok: false,
+                mensaje: 'El usuario no existe',
+                errors: { message: 'El usuario no existe' }
+            });
+        }
+
+        var body = req.body;
+        usuario.nombre = body.nombre;
+        usuario.email = body.email;
+        usuario.role = body.role;
+
+        usuario.save((err, usuarioGuardado) => {
+            if (err) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Error al actualizar usuario',
+                    errors: err
+                });
+            }
+
+            usuarioGuardado.password = null;
+
+            return res.status(200).json({
+                ok: true,
+                usuario: usuarioGuardado
+            });
+        });
+    });
+});
+
 module.exports = app;

@@ -2,6 +2,7 @@ var express = require('express');
 var bcrypt = require('bcryptjs');
 var app = express();
 var Usuario = require('../models/usuario');
+var mdAutenticacion = require('../middlewares/autenticacion');
 
 // ===============================
 // Obtener usuarios
@@ -25,41 +26,9 @@ app.get('/', (request, response, next) => {
 });
 
 // ===============================
-// Crear usuario
-// ===============================
-app.post('/', (request, response) => {
-    var body = request.body;
-
-    var usuario = new Usuario({
-        nombre: body.nombre,
-        email: body.email,
-        password: bcrypt.hashSync(body.password, 10),
-        img: body.img,
-        role: body.role
-    });
-
-    usuario.save((error, usuarioGuardado) => {
-        if (error) {
-            return response.status(400).json({
-                ok: false,
-                mensaje: 'Error al crear usuario',
-                errors: error
-            });
-        }
-
-        usuarioGuardado.password = null;
-
-        return response.status(201).json({
-            ok: true,
-            usuario: usuarioGuardado
-        });
-    });
-});
-
-// ===============================
 // Actualizar usuario
 // ===============================
-app.put('/:id', (req, res) => {
+app.put('/:id', mdAutenticacion.verifyToken, (req, res) => {
     var id = req.params.id;
 
     Usuario.findById(id, (err, usuario) => {
@@ -104,9 +73,41 @@ app.put('/:id', (req, res) => {
 });
 
 // ===============================
+// Crear usuario
+// ===============================
+app.post('/', mdAutenticacion.verifyToken, (request, response) => {
+    var body = request.body;
+
+    var usuario = new Usuario({
+        nombre: body.nombre,
+        email: body.email,
+        password: bcrypt.hashSync(body.password, 10),
+        img: body.img,
+        role: body.role
+    });
+
+    usuario.save((error, usuarioGuardado) => {
+        if (error) {
+            return response.status(400).json({
+                ok: false,
+                mensaje: 'Error al crear usuario',
+                errors: error
+            });
+        }
+
+        usuarioGuardado.password = null;
+
+        return response.status(201).json({
+            ok: true,
+            usuario: usuarioGuardado
+        });
+    });
+});
+
+// ===============================
 // Borrar usuario
 // ===============================
-app.delete('/:id', (req, res) => {
+app.delete('/:id', mdAutenticacion.verifyToken, (req, res) => {
     var id = req.params.id;
 
     Usuario.findOneAndDelete(id, (err, usuarioBorrado) => {

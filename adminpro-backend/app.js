@@ -1,7 +1,7 @@
 // Requires
 var express = require('express');
 var mongoose = require('mongoose');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
 
 // Inicializar variables
 var app = express();

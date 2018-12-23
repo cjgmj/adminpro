@@ -110,7 +110,7 @@ app.post('/', mdAutenticacion.verifyToken, (request, response) => {
 app.delete('/:id', mdAutenticacion.verifyToken, (req, res) => {
     var id = req.params.id;
 
-    Usuario.findOneAndDelete(id, (err, usuarioBorrado) => {
+    Usuario.findByIdAndRemove(id, (err, usuarioBorrado) => {
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -129,7 +129,7 @@ app.delete('/:id', mdAutenticacion.verifyToken, (req, res) => {
 
         return res.status(200).json({
             ok: true,
-            usuarioBorrado: usuarioBorrado
+            usuario: usuarioBorrado
         });
     });
 });

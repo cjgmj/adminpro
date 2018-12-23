@@ -7,20 +7,21 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // Obtener hospitales
 // ===============================
 app.get('/', (req, res) => {
-    Hospital.find((err, hospitales) => {
-        if (err) {
-            return res.status(500).json({
-                ok: false,
-                mensaje: 'Error en base de datos',
-                errors: err
-            });
-        }
+    Hospital.find({}).populate('usuario', 'nombre email')
+        .exec((err, hospitales) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error en base de datos',
+                    errors: err
+                });
+            }
 
-        return res.status(200).json({
-            ok: true,
-            hospitales: hospitales
+            return res.status(200).json({
+                ok: true,
+                hospitales: hospitales
+            });
         });
-    });
 });
 
 // ===============================

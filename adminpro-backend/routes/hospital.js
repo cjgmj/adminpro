@@ -7,7 +7,13 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // Obtener hospitales
 // ===============================
 app.get('/', (req, res) => {
-    Hospital.find({}).populate('usuario', 'nombre email')
+
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
+    var limite = req.query.limite || 5;
+    limite = Number(limite);
+
+    Hospital.find({}).populate('usuario', 'nombre email').skip(desde).limit(limite)
         .exec((err, hospitales) => {
             if (err) {
                 return res.status(500).json({
@@ -17,9 +23,12 @@ app.get('/', (req, res) => {
                 });
             }
 
-            return res.status(200).json({
-                ok: true,
-                hospitales: hospitales
+            Hospital.count({}, (err, cont) => {
+                return res.status(200).json({
+                    ok: true,
+                    hospitales: hospitales,
+                    total: cont
+                });
             });
         });
 });

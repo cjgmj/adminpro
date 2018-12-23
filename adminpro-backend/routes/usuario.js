@@ -8,8 +8,14 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // Obtener usuarios
 // ===============================
 app.get('/', (request, response, next) => {
-    Usuario.find({}, 'nombre email img role').exec(
-        (error, usuarios) => {
+
+    var desde = request.query.desde || 0;
+    desde = Number(desde);
+    var limite = request.query.limite || 5;
+    limite = Number(limite);
+
+    Usuario.find({}, 'nombre email img role').skip(desde).limit(limite)
+        .exec((error, usuarios) => {
             if (error) {
                 return response.status(500).json({
                     ok: false,
@@ -18,9 +24,12 @@ app.get('/', (request, response, next) => {
                 });
             }
 
-            return response.status(200).json({
-                ok: true,
-                usuarios: usuarios
+            Usuario.count({}, (err, cont) => {
+                return response.status(200).json({
+                    ok: true,
+                    usuarios: usuarios,
+                    total: cont
+                });
             });
         });
 });

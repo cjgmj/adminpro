@@ -7,7 +7,13 @@ var mdAutenticacion = require('../middlewares/autenticacion');
 // Obtener médicos
 // ===============================
 app.get('/', (req, res) => {
-    Medico.find({}).populate('usuario', 'nombre email').populate('hospital')
+
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
+    var limite = req.query.limite || 5;
+    limite = Number(limite);
+
+    Medico.find({}).populate('usuario', 'nombre email').populate('hospital').skip(desde).limit(limite)
         .exec((err, medicos) => {
             if (err) {
                 return res.status(500).json({
@@ -17,9 +23,12 @@ app.get('/', (req, res) => {
                 });
             }
 
-            return res.status(200).json({
-                ok: true,
-                medicos: medicos
+            Medico.count({}, (err, cont) => {
+                return res.status(200).json({
+                    ok: true,
+                    medicos: medicos,
+                    total: cont
+                });
             });
         });
 });

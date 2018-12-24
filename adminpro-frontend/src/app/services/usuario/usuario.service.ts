@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../../models/usuario.model';
 import { URL_SERVICIOS } from '../../config/config';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UsuarioService {
@@ -10,7 +11,7 @@ export class UsuarioService {
   usuario: Usuario;
   token: string;
 
-  constructor( private http: HttpClient ) {
+  constructor( private http: HttpClient, private router: Router ) {
     this.cargarStorage();
   }
 
@@ -38,6 +39,17 @@ export class UsuarioService {
 
     this.usuario = usuario;
     this.token = token;
+  }
+
+  logout() {
+    this.usuario = null;
+    this.token = null;
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('id');
+
+    this.router.navigate(['/login']);
   }
 
   loginGoogle( token: string ) {

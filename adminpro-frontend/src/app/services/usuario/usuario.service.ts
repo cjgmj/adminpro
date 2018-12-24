@@ -7,7 +7,29 @@ import { URL_SERVICIOS } from '../../config/config';
 @Injectable()
 export class UsuarioService {
 
+  usuario: Usuario;
+  token: string;
+
   constructor( private http: HttpClient ) { }
+
+  guardarStorage( id: string, token: string, usuario: Usuario ) {
+    localStorage.setItem('id', id);
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+
+    this.usuario = usuario;
+    this.token = token;
+  }
+
+  loginGoogle( token: string ) {
+    const url = `${URL_SERVICIOS}/login/google`;
+
+    // En ECMAS6 { token } es como poner { token: token }
+    return this.http.post(url, { token } ).pipe(map( (resp: any) => {
+      this.guardarStorage( resp.id, resp.token, resp.usuario);
+      return true;
+    }));
+  }
 
   login( usuario: Usuario, recuerdame: boolean = false ) {
 
@@ -19,10 +41,7 @@ export class UsuarioService {
 
     const url = `${URL_SERVICIOS}/login`;
     return this.http.post(url, usuario).pipe(map( (resp: any) => {
-      localStorage.setItem('id', resp.id);
-      localStorage.setItem('token', resp.token);
-      localStorage.setItem('usuario', JSON.stringify(resp.usuario));
-
+      this.guardarStorage(resp.id, resp.token, resp.usuario);
       return true;
     }));
   }

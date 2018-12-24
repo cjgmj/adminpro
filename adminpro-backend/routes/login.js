@@ -73,7 +73,7 @@ app.post('/google', async(req, res) => {
             email: googleUser.email,
             img: googleUser.img,
             google: true,
-            password: ':)'
+            password: null
         });
 
         usuario.save((err, usuarioDB) => {

@@ -5,6 +5,49 @@ var app = express();
 var Usuario = require('../models/usuario');
 var SEED = require('../config/config').SEED;
 
+// Google
+var CLIENT_ID = require('../config/config').CLIENT_ID;
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(CLIENT_ID);
+
+// ===============================
+// Autenticación Google
+// ===============================
+async function verify(token) {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: CLIENT_ID
+    });
+    const payload = ticket.getPayload();
+
+    return {
+        nombre: payload.name,
+        email: payload.email,
+        img: payload.picture,
+        google: true
+    };
+}
+
+app.post('/google', async(req, res) => {
+    var token = req.body.token;
+
+    var googleUser = await verify(token).catch(e => {
+        res.status(403).json({
+            ok: false,
+            mensaje: 'Token no válido'
+        });
+    });
+
+    res.status(200).json({
+        ok: true,
+        mensaje: 'Petición realizada correctamente',
+        googleUser: googleUser
+    });
+});
+
+// ===============================
+// Autenticación normal
+// ===============================
 app.post('/', (req, res) => {
     var body = req.body;
 
@@ -46,6 +89,6 @@ app.post('/', (req, res) => {
             id: usuarioDB.id
         });
     });
-})
+});
 
 module.exports = app;

@@ -10,7 +10,26 @@ export class UsuarioService {
   usuario: Usuario;
   token: string;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient ) {
+    this.cargarStorage();
+  }
+
+  estaLogueado() {
+    return ( this.token !== null );
+  }
+
+  cargarStorage() {
+    if ( localStorage.getItem('token') ) {
+      this.token =  localStorage.getItem('token');
+    } else {
+      this.token = null;
+    }
+    if ( localStorage.getItem('usuario') ) {
+      this.usuario =  JSON.parse(localStorage.getItem('usuario'));
+    } else {
+      this.usuario = null;
+    }
+  }
 
   guardarStorage( id: string, token: string, usuario: Usuario ) {
     localStorage.setItem('id', id);

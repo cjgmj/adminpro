@@ -38,10 +38,63 @@ app.post('/google', async(req, res) => {
         });
     });
 
-    res.status(200).json({
-        ok: true,
-        mensaje: 'Petición realizada correctamente',
-        googleUser: googleUser
+    Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
+        if (err) {
+            return response.status(500).json({
+                ok: false,
+                mensaje: 'Error en base de datos',
+                errors: error
+            });
+        }
+
+        if (usuarioDB) {
+            if (!usuarioDB.google) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Debe usar su autenticación normal',
+                    errors: { message: 'Debe usar su autenticación normal' }
+                });
+            }
+
+            var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 14400 });
+
+            return res.status(200).json({
+                ok: true,
+                mensaje: 'Login correcto',
+                usuario: usuarioDB,
+                token: token,
+                id: usuarioDB.id
+            });
+        }
+
+        // El usuario no existe en BDD
+        var usuario = new Usuario({
+            nombre: googleUser.nombre,
+            email: googleUser.email,
+            img: googleUser.img,
+            google: true,
+            password: ':)'
+        });
+
+        usuario.save((err, usuarioDB) => {
+            if (err) {
+                return response.status(500).json({
+                    ok: false,
+                    mensaje: 'Error en base de datos',
+                    errors: error
+                });
+            }
+
+            var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 14400 });
+
+            return res.status(200).json({
+                ok: true,
+                mensaje: 'Login correcto',
+                usuario: usuarioDB,
+                token: token,
+                id: usuarioDB.id
+            });
+        });
     });
 });
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Usuario } from '../../models/usuario.model';
 import { URL_SERVICIOS } from '../../config/config';
-import { Router } from '@angular/router';
+import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 
 @Injectable()
 export class UsuarioService {
@@ -11,7 +12,7 @@ export class UsuarioService {
   usuario: Usuario;
   token: string;
 
-  constructor( private http: HttpClient, private router: Router ) {
+  constructor( private http: HttpClient, private router: Router, private _subirArchivoService: SubirArchivoService ) {
     this.cargarStorage();
   }
 
@@ -94,5 +95,15 @@ export class UsuarioService {
       swal('Usuario actualizado', usuario.nombre, 'success');
       return true;
     }));
+  }
+
+  cambiarImagen ( archivo: File, id: string ) {
+    this._subirArchivoService.subirArchivo( archivo, 'usuarios', id ).then( (resp: any) => {
+      this.usuario.img = resp.usuario.img;
+      this.guardarStorage(id, this.token, this.usuario);
+      swal('Imagen actualizado', this.usuario.nombre, 'success');
+    }).catch( resp => {
+      swal('Fallo al actualizar la imagen', this.usuario.nombre, 'danger');
+    });
   }
 }

@@ -103,7 +103,7 @@ function subirPorTipo(tipo, id, nombreArchivo, res) {
                     });
                 }
 
-                usuarioGuardado = null;
+                usuarioGuardado.password = null;
 
                 return res.status(200).json({
                     ok: true,

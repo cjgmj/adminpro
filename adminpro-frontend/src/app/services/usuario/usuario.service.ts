@@ -103,7 +103,7 @@ export class UsuarioService {
       this.guardarStorage(id, this.token, this.usuario);
       swal('Imagen actualizado', this.usuario.nombre, 'success');
     }).catch( resp => {
-      swal('Fallo al actualizar la imagen', this.usuario.nombre, 'danger');
+      swal('Fallo al actualizar la imagen', this.usuario.nombre, 'error');
     });
   }
 }

@@ -1,0 +1,24 @@
+<div class="modal fade" id="modalUpload" tabindex="-1" role="dialog" aria-labelledby="modalUploadLabel" aria-hidden="true">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalUploadLabel">Fotografía del usuario {{_modalUploadService.nombre}}</h5>
+                <button type="button" (click)="borrarDatos()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body" align="center">
+                <img *ngIf="imagenTemp === null" [src]="_modalUploadService.imagen | imagen" class="w150">
+                <img *ngIf="imagenTemp !== null" [src]="imagenTemp" class="w150">
+
+                <br><br>
+
+                <input type="file" (change)="seleccionImage( $event.target.files[0] )">
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="subirImagen()" [disabled]="imagenSubir === null" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" (click)="borrarDatos()" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

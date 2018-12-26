@@ -38,7 +38,11 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let usuario of usuarios">
-                            <td class="w70"><img [src]="usuario.img | imagen" class="img-thumbnail img-50 img-circle"></td>
+                            <td class="w70">
+                                <button class="btn btn-link" (click)="obtenerDatos( usuario )" type="button" data-toggle="modal" data-target="#modalUpload">
+                                    <img [src]="usuario.img | imagen" class="img-thumbnail img-50 img-circle pointer">
+                                </button>
+                            </td>
                             <td>{{usuario.email}}</td>
                             <td>{{usuario.nombre}}</td>
                             <td>

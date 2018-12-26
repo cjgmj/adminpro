@@ -23,7 +23,7 @@ const PAGESROUTES: Routes = [
         { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
         { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
         { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
-        // Mantenimiento
+        // Gestión
         { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimineto de usuarios' } },
         // Por defecto
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }

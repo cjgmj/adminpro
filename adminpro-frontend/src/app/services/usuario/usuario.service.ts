@@ -112,4 +112,10 @@ export class UsuarioService {
 
     return this.http.get( url );
   }
+
+  buscarUsuarios( texto: string ) {
+    const url = `${URL_SERVICIOS}/busqueda/coleccion/usuarios/${texto}`;
+
+    return this.http.get( url ).pipe(map( (resp: any) => resp.usuarios ));
+  }
 }

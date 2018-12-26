@@ -14,7 +14,7 @@ app.get('/', (request, response, next) => {
     var limite = request.query.limite || 5;
     limite = Number(limite);
 
-    Usuario.find({}, 'nombre email img role').skip(desde).limit(limite)
+    Usuario.find({}, 'nombre email img role google').skip(desde).limit(limite)
         .exec((error, usuarios) => {
             if (error) {
                 return response.status(500).json({

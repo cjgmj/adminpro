@@ -106,4 +106,10 @@ export class UsuarioService {
       swal('Fallo al actualizar la imagen', this.usuario.nombre, 'error');
     });
   }
+
+  cargarUsuarios( desde: number = 0 ) {
+    const url = `${URL_SERVICIOS}/usuario?desde=${desde}`;
+
+    return this.http.get( url );
+  }
 }

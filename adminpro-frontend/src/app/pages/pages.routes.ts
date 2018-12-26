@@ -10,16 +10,22 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
 
 const PAGESROUTES: Routes = [
     { path: '', component: PagesComponent, canActivate: [ LoginGuard ], children: [
+        // Usuario
+        { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil' } },
+        { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
+        // Principal
         { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
         { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
         { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
-        { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
         { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
         { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
-        { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil' } },
+        // Mantenimiento
+        { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimineto de usuarios' } },
+        // Por defecto
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ] }
 ];

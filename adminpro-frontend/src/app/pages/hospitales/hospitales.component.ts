@@ -12,6 +12,7 @@ import swal from 'sweetalert';
 export class HospitalesComponent implements OnInit {
 
   hospitales: Hospital[] = [];
+  desde = 0;
   totalRegistros = 0;
   cargando = true;
 
@@ -24,11 +25,26 @@ export class HospitalesComponent implements OnInit {
 
   cargarHospitales() {
     this.cargando = true;
-    this._hospitalService.cargarHospitales().subscribe( hospitales => {
+    this._hospitalService.cargarHospitales(this.desde).subscribe( hospitales => {
       this.totalRegistros = this._hospitalService.totalHospitales;
       this.hospitales = hospitales;
       this.cargando = false;
     });
+  }
+
+  cambiarDesde( valor: number ) {
+    const desde = this.desde + valor;
+
+    if ( desde >= this.totalRegistros ) {
+      return;
+    }
+
+    if ( desde < 0 ) {
+      return;
+    }
+
+    this.desde += valor;
+    this.cargarHospitales();
   }
 
   buscarHospital( texto: string ) {

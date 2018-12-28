@@ -14,8 +14,8 @@ export class HospitalService {
 
   constructor( private http: HttpClient, private _usuarioService: UsuarioService ) { }
 
-  cargarHospitales() {
-    const url = `${URL_SERVICIOS}/hospital`;
+  cargarHospitales( desde: number = 0 ) {
+    const url = `${URL_SERVICIOS}/hospital?desde=${desde}`;
 
     return this.http.get( url ).pipe(map( (resp: any) => {
       this.totalHospitales = resp.total;

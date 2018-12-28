@@ -10,6 +10,7 @@ import { Medico } from '../../models/medico.model';
 export class MedicosComponent implements OnInit {
 
   medicos: Medico[] = [];
+  desde = 0;
   totalRegistros = 0;
   cargando = true;
 
@@ -21,11 +22,26 @@ export class MedicosComponent implements OnInit {
 
   cargarMedicos() {
     this.cargando = true;
-    this._medicoService.cargarMedicos().subscribe( medicos => {
+    this._medicoService.cargarMedicos(this.desde).subscribe( medicos => {
       this.totalRegistros = this._medicoService.totalMedicos;
       this.medicos = medicos;
       this.cargando = false;
     });
+  }
+
+  cambiarDesde( valor: number ) {
+    const desde = this.desde + valor;
+
+    if ( desde >= this.totalRegistros ) {
+      return;
+    }
+
+    if ( desde < 0 ) {
+      return;
+    }
+
+    this.desde += valor;
+    this.cargarMedicos();
   }
 
   buscarMedico( texto: string ) {

@@ -34,7 +34,7 @@ app.get('/', (req, res) => {
 });
 
 // ==========================================
-// Obtener Hospital por ID
+// Obtener hospital por ID
 // ==========================================
 app.get('/:id', (req, res) => {
     var id = req.params.id;

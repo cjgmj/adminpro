@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <input (keyup)="buscarHospital( input.value )" #input type="text" class="form-control" placeholder="Buscar hospital">
+                <input (keyup)="buscarMedico( input.value )" #input type="text" class="form-control" placeholder="Buscar médico">
             </div>
         </div>
     </div>
@@ -25,30 +25,30 @@
         <div class="card">
             <div class="card-body">
                 <div class="text-right">
-                    <button (click)="crearHospital()" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
-                      <i class="fa fa-plus"></i> Crear hospital
+                    <button [routerLink]="['/medico', 'nuevo']" type="button" class="btn waves-effect waves-light btn-rounded btn-primary">
+                      <i class="fa fa-plus"></i> Crear médico
                     </button>
                 </div>
-                <h3 class="card-title">Hospitales registrados <small>({{totalRegistros}})</small></h3>
+                <h3 class="card-title">Médicos registrados <small>({{totalRegistros}})</small></h3>
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Foto</th>
+                            <th>Médico</th>
                             <th>Hospital</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let hospital of hospitales">
+                        <tr *ngFor="let medico of medicos">
                             <td>
-                                <button class="btn btn-link" (click)="obtenerDatos( hospital )" type="button" data-toggle="modal" data-target="#modalUpload">
-                                <img [src]=" hospital.img | imagen:'hospital'" class="img-thumbnail img-50 rounded pointer">
-                              </button>
+                                <img [src]=" medico.img | imagen:'medico'" class="img-thumbnail img-50 img-circle">
                             </td>
-                            <td><input type="text" class="form-control" name="nombre" [(ngModel)]="hospital.nombre" placeholder="Nombre del hospital"></td>
+                            <td>{{medico.nombre}}</td>
+                            <td>{{medico['hospital'].nombre}}</td>
                             <td>
-                                <button class="btn btn-primary mr-2" (click)="guardarHospital( hospital )"><i class="fa fa-save"></i></button>
-                                <button class="btn btn-danger" (click)="borrarHospital( hospital )"><i class="fa fa-trash-o"></i></button>
+                                <button class="btn btn-primary mr-2" [routerLink]="['/medico', medico._id]"><i class="fa fa-edit"></i></button>
+                                <button class="btn btn-danger" (click)="borrarMedico( medico )"><i class="fa fa-trash-o"></i></button>
                             </td>
                         </tr>
                     </tbody>

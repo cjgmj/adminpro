@@ -41,7 +41,6 @@ export class ModalUploadComponent implements OnInit {
   borrarDatos() {
     this.imagenSubir = null;
     this.imagenTemp = null;
-    this.nombre = '';
     this._modalUploadService.borrarDatos();
   }
 

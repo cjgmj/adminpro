@@ -11,6 +11,7 @@ import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { HospitalesComponent } from './hospitales/hospitales.component';
 
 const PAGESROUTES: Routes = [
     { path: '', component: PagesComponent, canActivate: [ LoginGuard ], children: [
@@ -24,7 +25,8 @@ const PAGESROUTES: Routes = [
         { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
         { path: 'rxjs', component: RxjsComponent, data: { titulo: 'Rxjs' } },
         // Gestión
-        { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Mantenimineto de usuarios' } },
+        { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Gestión de usuarios' } },
+        { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Gestión de hospitales' } },
         // Por defecto
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ] }

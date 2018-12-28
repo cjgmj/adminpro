@@ -7,16 +7,18 @@ export class ModalUploadService {
   public id: string;
   public nombre: string;
   public imagen: string;
+  public coleccion: string;
 
   public notificacion = new EventEmitter<any>();
 
   constructor() { }
 
-  obtenerDatos( tipo: string, id: string, nombre: string, imagen: string ) {
+  obtenerDatos( tipo: string, id: string, nombre: string, imagen: string, coleccion: string = 'usuario' ) {
     this.tipo = tipo;
     this.id = id;
     this.nombre = nombre;
     this.imagen = imagen;
+    this.coleccion = coleccion;
   }
 
   borrarDatos() {

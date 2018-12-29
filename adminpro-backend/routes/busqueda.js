@@ -78,7 +78,7 @@ function buscarMedicos(regex) {
 
 function buscarUsuarios(regex) {
     return new Promise((resolve, reject) => {
-        Usuario.find({}, 'nombre email role').or([{ 'nombre': regex }, { 'email': regex }]).exec((err, usuarios) => {
+        Usuario.find({}, 'nombre email img role google').or([{ 'nombre': regex }, { 'email': regex }]).exec((err, usuarios) => {
             if (err) {
                 reject('Error al cargar médicos', err);
             }

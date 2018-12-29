@@ -14,6 +14,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { HospitalesComponent } from './hospitales/hospitales.component';
 import { MedicosComponent } from './medicos/medicos.component';
 import { MedicoComponent } from './medicos/medico.component';
+import { BusquedaComponent } from './busqueda/busqueda.component';
 
 const PAGESROUTES: Routes = [
     { path: '', component: PagesComponent, canActivate: [ LoginGuard ], children: [
@@ -31,6 +32,8 @@ const PAGESROUTES: Routes = [
         { path: 'hospitales', component: HospitalesComponent, data: { titulo: 'Gestión de hospitales' } },
         { path: 'medicos', component: MedicosComponent, data: { titulo: 'Gestión de médicos' } },
         { path: 'medico/:id', component: MedicoComponent, data: { titulo: 'Actualizar médico' } },
+        // Búsqueda
+        { path: 'busqueda/:texto', component: BusquedaComponent, data: { titulo: 'Buscar' } },
         // Por defecto
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
     ] }

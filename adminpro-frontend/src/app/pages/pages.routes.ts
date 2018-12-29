@@ -1,8 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginGuard, AdminGuard } from '../services/service.index';
+import { AdminGuard, VerificaTokenGuard } from '../services/service.index';
 
-import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProgressComponent } from './progress/progress.component';
 import { Graficas1Component } from './graficas1/graficas1.component';
@@ -21,7 +20,7 @@ const PAGESROUTES: Routes = [
         { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil' } },
         { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
         // Principal
-        { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+        { path: 'dashboard', component: DashboardComponent, canActivate: [ VerificaTokenGuard ], data: { titulo: 'Dashboard' } },
         { path: 'progress', component: ProgressComponent, data: { titulo: 'Progress' } },
         { path: 'graficas1', component: Graficas1Component, data: { titulo: 'Gráficas' } },
         { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },

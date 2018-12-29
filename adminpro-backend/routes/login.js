@@ -1,9 +1,10 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-var app = express();
-var Usuario = require('../models/usuario');
 var SEED = require('../config/config').SEED;
+var Usuario = require('../models/usuario');
+var mdAutenticacion = require('../middlewares/autenticacion');
+var app = express();
 
 // Google
 var CLIENT_ID = require('../config/config').CLIENT_ID;
@@ -27,6 +28,19 @@ async function verify(token) {
         google: true
     };
 }
+
+// ===============================
+// Autenticación Google
+// ===============================
+app.get('/refreshToken', mdAutenticacion.verifyToken, (req, res) => {
+
+    var token = jwt.sign({ usuario: req.usuario }, SEED, { expiresIn: 14400 });
+
+    res.status(200).json({
+        ok: true,
+        token: token
+    });
+});
 
 app.post('/google', async(req, res) => {
     var token = req.body.token;

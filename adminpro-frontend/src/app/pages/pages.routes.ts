@@ -17,7 +17,6 @@ import { MedicoComponent } from './medicos/medico.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 
 const PAGESROUTES: Routes = [
-    { path: '', component: PagesComponent, canActivate: [ LoginGuard ], children: [
         // Usuario
         { path: 'profile', component: ProfileComponent, data: { titulo: 'Perfil' } },
         { path: 'account-settings', component: AccountSettingsComponent, data: { titulo: 'Ajustes' } },
@@ -36,7 +35,6 @@ const PAGESROUTES: Routes = [
         { path: 'busqueda/:texto', component: BusquedaComponent, data: { titulo: 'Buscar' } },
         // Por defecto
         { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
-    ] }
 ];
 
 export const PAGES_ROUTES = RouterModule.forChild( PAGESROUTES );

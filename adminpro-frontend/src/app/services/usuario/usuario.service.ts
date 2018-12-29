@@ -31,7 +31,6 @@ export class UsuarioService {
       this.usuario = null;
       this.menu = null;
     }
-    console.log('cargarStorage', this.menu[1].submenu);
   }
 
   guardarStorage( id: string, token: string, usuario: Usuario, menu: any ) {

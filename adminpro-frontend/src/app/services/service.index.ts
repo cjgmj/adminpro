@@ -7,3 +7,4 @@ export { HospitalService } from './hospital/hospital.service';
 export { MedicoService } from './medico/medico.service';
 
 export { LoginGuard } from './guards/login.guard';
+export { AdminGuard } from './guards/admin.guard';

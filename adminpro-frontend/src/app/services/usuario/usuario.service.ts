@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { SubirArchivoService } from '../subir-archivo/subir-archivo.service';
 import { Usuario } from '../../models/usuario.model';
 import { URL_SERVICIOS } from '../../config/config';
+import { throwError } from 'rxjs';
+import swal from 'sweetalert';
 
 @Injectable()
 export class UsuarioService {
@@ -79,6 +81,9 @@ export class UsuarioService {
     return this.http.post(url, usuario).pipe(map( (resp: any) => {
       this.guardarStorage(resp.id, resp.token, resp.usuario, resp.menu);
       return true;
+    }), catchError( err => {
+      swal('Error en el login', err.error.mensaje, 'error');
+      return throwError( err );
     }));
   }
 
@@ -88,6 +93,9 @@ export class UsuarioService {
     return this.http.post(url, usuario).pipe(map( (resp: any) => {
       swal('Usuario creado', usuario.nombre, 'success');
       return resp.usuario;
+    }), catchError( err => {
+      swal(err.error.mensaje, err.error.errors.message, 'error');
+      return throwError( err );
     }));
   }
 
